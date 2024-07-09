@@ -28,5 +28,5 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-src/Main.java
-src/Main.class
+!**/src/Main.java
+!**/src/Main.class
