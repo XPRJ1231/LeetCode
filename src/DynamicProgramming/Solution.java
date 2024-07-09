@@ -1,6 +1,6 @@
 package DynamicProgramming;
 
-public class Problem001 {
+public class Solution {
     public static void main(String[] args) {
 
     }
