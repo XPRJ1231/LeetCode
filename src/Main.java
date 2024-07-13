@@ -1,25 +1,25 @@
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
 
     }
 
-    public void moveZeroes(int[] nums) {
-        int n = nums.length;
-        if (n <= 1) {
-            return;
-        }
-        int i = 0;
+    public List<List<String>> groupAnagrams(String[] strs) {
+        //49字母异位词分组
+        HashMap<String, List<String>> map = new HashMap<>();
+        List<List<String>> ans;
 
-        for (int j = 0; j < n; j++) {
-            if (nums[j] != 0) {
-                nums[i] = nums[j];
-                i++;
-            }
+        for (String str : strs) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String sorted = new String(chars);
+            map.computeIfAbsent(sorted, k -> new ArrayList<>()).add(str);
         }
 
-        for (; i < n; i++) {
-            nums[i] = 0;
-        }
+        ans = new ArrayList<>(map.values());
+        return ans;
     }
+
+
 }
