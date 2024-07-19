@@ -1,21 +1,46 @@
 package LinkedList;
 
-import java.util.List;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class Solution {
 
+    public ListNode mergeKLists(ListNode[] lists) {
+        // 23. 合并 K 个升序链表
+        PriorityQueue<ListNode> minHeap = new PriorityQueue<>(Comparator.comparingInt(n -> n.val));
+
+        for (ListNode node : lists) {
+            if (node != null) {
+                minHeap.add(node);
+            }
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode pre = dummy;
+
+        while (!minHeap.isEmpty()) {
+            ListNode cur = minHeap.poll();
+            pre.next = new ListNode(cur.val);
+            pre = pre.next;
+            if (cur.next != null) {
+                minHeap.add(cur.next);
+            }
+        }
+
+        return dummy.next;
+    }
+
     public boolean isPalindrome(ListNode head) {
         //234.回文链表
-        ListNode mid=getMiddle(head);
-        ListNode reversed=reverse(mid);
-        ListNode head1=head;
-        ListNode head2=reversed;
-        while(head1!=null&&head2!=null){
-            if(head1.val!=head2.val){
+        ListNode mid = getMiddle(head);
+        ListNode reversed = reverse(mid);
+        ListNode head1 = head;
+        ListNode head2 = reversed;
+        while (head1 != null && head2 != null) {
+            if (head1.val != head2.val) {
                 return false;
             }
-            head1=head1.next;
-            head2=head2.next;
+            head1 = head1.next;
+            head2 = head2.next;
         }
 
         return true;
