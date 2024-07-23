@@ -1,7 +1,6 @@
 package LinkedList;
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Solution {
 
@@ -80,4 +79,78 @@ public class Solution {
 
         return p;
     }
+
+
 }
+
+class LRUCache {
+    //146. LRU 缓存
+
+
+    private static class Node {
+        int key, val;
+        Node next;
+        Node prev;
+
+        public Node(int key, int val) {
+            this.key = key;
+            this.val = val;
+            next = null;
+            prev = null;
+        }
+    }
+
+    private final int capacity;
+    private Map<Integer, Node> map = new HashMap<>();
+    private final Node dummy = new Node(0, 0);
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        dummy.next = dummy;
+        dummy.prev = dummy;
+    }
+
+    public int get(int key) {
+        Node node = getNode(key);
+        return node == null ? -1 : node.val;
+    }
+
+    public void put(int key, int value) {
+        Node cur = getNode(key);
+        if (cur != null) {
+            cur.val = value;
+            return;
+        }
+        cur = new Node(key, value);
+        map.put(key, cur);
+        add(cur);
+        if (map.size() > capacity) {
+            Node tail = dummy.prev;
+            map.remove(tail.key);
+            removeNode(tail);
+        }
+    }
+
+    private Node getNode(int key) {
+        if (!map.containsKey(key)) {
+            return null;
+        }
+        Node node = map.get(key);
+        removeNode(node);
+        add(node);
+        return node;
+    }
+
+    private void removeNode(Node node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    private void add(Node node) {
+        node.next = dummy.next;
+        dummy.next = node;
+        node.prev = dummy;
+        node.next.prev = node;
+    }
+}
+
